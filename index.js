@@ -20,7 +20,7 @@ const io = new Server(server, {
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Servidor de sockets funcionando!");
+  res.send("Servidor de sockets funcionando desde server con github actions!");
 });
 
 server.listen(PORT, () => {
