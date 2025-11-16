@@ -1,0 +1,26 @@
+name: Deploy to Contabo
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: 161.97.115.218
+        username: root
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd /root/websocket-server-barbershop
+          git pull origin main
+          docker-compose build
+          docker-compose down
+          docker-compose up -d
+          echo "✅ Deploy completado"
