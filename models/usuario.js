@@ -1,36 +1,20 @@
 import mongoose from "mongoose";
 const { models, Schema, model } = mongoose;
 
-const notificacionSchema = new Schema(
-  {
-    mensaje: { type: String, required: true },
-    fecha: { type: Date, default: Date.now },
-    leido: { type: Boolean, default: false },
-  },
-  { _id: true } // ✅ asegura que cada notificación tenga un _id único
-);
-
-// // Schema para suscripciones Web Push
-const pushSubscriptionSchema = new Schema(
-  {
-    endpoint: { type: String, required: true },
-    keys: {
-      p256dh: { type: String, required: true },
-      auth: { type: String, required: true },
-    },
-  },
-  { _id: false }
-);
-
 const usuarioSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
     },
+    cedula: {
+      type: String,
+      default: "",
+    },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     telefono: {
       type: String,
@@ -52,23 +36,44 @@ const usuarioSchema = new Schema(
       type: String,
       default: "",
     },
-    plan: {
+    cargo: {
       type: String,
-      default: "gratis",
+      default: "cobrador",
+    },
+    ruta: {
+      type: String,
+      default: "ruta-1",
     },
     estado: {
       type: String,
       default: "activo",
+      enum: ["activo", "inactivo", "suspendido"],
     },
-    role: {
-      type: String,
-      default: "Usuario",
+
+    // ===== LÍNEA DE CRÉDITO =====
+    linea_credito_total: {
+      type: Number,
+      default: 10000000,
     },
-    barberoID: {
-      type: String,
-      default: "",
+    linea_credito_usada: {
+      type: Number,
+      default: 0,
     },
-    intentos_fallidos: {
+
+    // ===== REFERENCIAS =====
+    listaClientes: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Cliente",
+      default: [],
+    },
+    rutas: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Ruta",
+      default: [],
+    },
+
+    // ===== CONTROL DE ACCESO =====
+    intentosFallidos: {
       type: Number,
       default: 0,
     },
@@ -76,28 +81,13 @@ const usuarioSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    codigo_verificacion: {
+    codigoVerificacion: {
       type: String,
       default: "",
     },
-    date_codigo_verificacion: {
+    dateCodigoVerificacion: {
       type: Date,
       default: Date.now,
-    },
-    notificaciones: {
-      type: [notificacionSchema], // ✅ subdocumentos con _id
-      default: [
-        {
-          mensaje: "Bienvenido a Seventwo!. Gracias por registrarte.",
-          fecha: new Date(),
-          leido: false,
-        },
-      ],
-    },
-    // 🔔 Suscripciones a notificaciones push (una por dispositivo)
-    pushSubscriptions: {
-      type: [pushSubscriptionSchema],
-      default: [],
     },
   },
   {

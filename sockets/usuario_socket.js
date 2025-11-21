@@ -39,6 +39,26 @@ export const usuario_socket = (io) => {
       io.emit("server:usuarios", usuarios); // Emitir a todos
     });
 
+    // Agregar cliente a la lista del usuarios
+    socket.on("client:agregar_cliente_a_usuario", async (id, data) => {
+      const usuario = await Usuario.findById(id);
+      const lista_clientes = [...usuario.listaClientes];
+      lista_clientes.push(data);
+
+      const usuarioUpdate = await Usuario.findByIdAndUpdate(id, data, {
+        new: true,
+      });
+      if (!usuario) {
+        return socket.emit("server:error", "Usuario no encontrado");
+      }
+
+      io.emit("server:agregar_cliente_a_usuario", usuarioUpdate);
+
+      const usuarios = await Usuario.find();
+
+      io.emit("server:usuarios", usuarios);
+    });
+
     socket.on("disconnect", () => {
       console.log("Cliente desconectado:", socket.id);
     });
