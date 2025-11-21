@@ -16,24 +16,11 @@ jobs:
           script: |
             cd /root/websocket-server-barbershop
 
-            # ✅ Resetear cambios locales
+            # ✅ Traer cambios del repositorio
             git fetch origin main
-            git reset --hard origin/main
-            git clean -fd
+            git merge origin/main --no-edit
 
-            # ✅ Instalar dependencias si hay cambios en package.json
-            npm install
+            # ✅ Ejecutar script de deploy
+            bash .deployment/contabo/deploy.sh
 
-            # ✅ Reconstruir imagen y reiniciar
-            docker-compose down
-            docker-compose build --no-cache
-            docker-compose up -d
-
-            # ✅ Esperar a que esté listo
-            sleep 5
-
-            # ✅ Verificar que esté corriendo
-            docker-compose ps
-            docker-compose logs --tail 20
-
-            echo "✅ Deploy completado exitosamente"
+            echo "✅ Deploy completado"
