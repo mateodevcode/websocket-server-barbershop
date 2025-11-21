@@ -1,6 +1,7 @@
 import Cliente from "../models/cliente.js";
 import Usuario from "../models/usuario.js";
 
+// prueba
 export const cliente_socket = (io) => {
   // Evento cuando un cliente se conecta
   io.on("connection", (socket) => {
