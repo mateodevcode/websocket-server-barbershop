@@ -61,6 +61,18 @@ const clienteSchema = new Schema(
       type: Number,
       default: 0,
     },
+    cuota_diaria: {
+      type: Number,
+      default: 0,
+    },
+    fecha_ultimo_pago: {
+      type: Date,
+      default: null,
+    },
+    total_pagado: {
+      type: Number,
+      default: 0,
+    },
 
     // ===== INFORMACIÓN =====
     imageUrl: {
@@ -95,6 +107,18 @@ const clienteSchema = new Schema(
       type: String,
       enum: ["Activo", "Pagado", "Vencido", "Suspendido"],
       default: "Activo",
+    },
+    fecha_ultimo_pago: {
+      type: Date,
+      default: null,
+    },
+    total_pagado: {
+      type: Number,
+      default: 0,
+    },
+    cuota_diaria: {
+      type: Number,
+      default: 0,
     },
   },
   {

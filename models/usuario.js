@@ -40,10 +40,6 @@ const usuarioSchema = new Schema(
       type: String,
       default: "cobrador",
     },
-    ruta: {
-      type: String,
-      default: "ruta-1",
-    },
     estado: {
       type: String,
       default: "activo",
@@ -58,6 +54,14 @@ const usuarioSchema = new Schema(
     linea_credito_usada: {
       type: Number,
       default: 0,
+    },
+    efectivo_en_mano: {
+      type: Number,
+      default: 0,
+    },
+    ultima_fecha_cuadre: {
+      type: Date,
+      default: null,
     },
 
     // ===== REFERENCIAS =====
