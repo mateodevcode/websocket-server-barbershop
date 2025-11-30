@@ -30,7 +30,7 @@ app.use(cors());
 
 app.get("/", (req, res) => {
   res.send(
-    "Servidor de sockets funcionando desde server con github actions! + nuevo servidor + verificacion"
+    "Servidor de sockets funcionando desde server con github actions! + nuevo servidor + verificacion + verificacion de nuevo"
   );
 });
 
