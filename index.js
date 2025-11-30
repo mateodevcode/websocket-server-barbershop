@@ -29,7 +29,7 @@ const io = new Server(server, {
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Servidor de sockets funcionando desde server con github actions!");
+  res.send("Servidor de sockets funcionando desde server con github actions! + nuevo sewrvidor");
 });
 
 // ✅ Ruta de health check
